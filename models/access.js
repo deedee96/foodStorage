@@ -9,7 +9,7 @@ var docClient = new AWS.DynamoDB.DocumentClient()
 var table = "foodNode";
 
 
-function getUser(email) {
+function getUser(email, callback) {
     var params = {
     TableName: table,
     Key:{
@@ -21,13 +21,14 @@ function getUser(email) {
         console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
     } else {
         console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+        callback(null,data);
         //result = JSON.stringify(data, null, 2);
-        var result = data.Item.inventory;
-        return result;
+        //var result = data.Item.inventory;
+        //return result;
     }
     });
 
-	console.log("Returning details for user: " + email);
+	//console.log("Returning details for user: " + email);
 
 
 
