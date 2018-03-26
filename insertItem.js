@@ -9,6 +9,8 @@ var docClient = new AWS.DynamoDB.DocumentClient();
 console.log("Importing food into foodNode. Please wait.");
 
 
+
+//Remember to check for inventory
  var params = {       
      TableName: "foodNode",
     Item: {
