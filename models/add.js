@@ -8,19 +8,32 @@ var docClient = new AWS.DynamoDB.DocumentClient()
 var table = "foodNode";
 
 
-function updateInventory(itemToAdd) {
-    console.log("calling update from models");
-    docClient.update({
-  TableName: table,
-  Key: { email: "admin@gmail.com" },
-  UpdateExpression: "ADD #inventory :inventory",
-  ExpressionAttributeNames: { "#inventory" : "inventory" },
-  ExpressionAttributeValues: { ":inventory": docClient.createSet([itemToAdd]) }
-})
-    
+function updateInventory(itemName, quantity, email,res) {
+    var params = {
+        TableName: table,
+        Key: { email: email },
+        UpdateExpression: "SET inventory.#itemName = :quan",
+        ConditionExpression: "attribute_not_exists(inventory.#itemName)", 
+        ExpressionAttributeValues: {
+            ":quan": quantity
+        },
+        ExpressionAttributeNames: {
+            "#itemName": itemName
+        }
+    }
+
+
+    docClient.update(params, function(err, data) {
+        if (err) {
+            res.json({success: false});
+        } else {
+            res.json({success: true});
+        }
+    }); 
 }
 
 module.exports = {
     updateInventory: updateInventory
 };
+
 

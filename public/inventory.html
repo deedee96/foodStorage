@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Food Storage</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <script src="ajax.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body onload="getTable()">
+        <!--Put this form later on when I know how to do a post request-->
+<!--        <form action="/access" method="post">
+            
+            <input type="text" name="email" placeholder="Enter your email">
+            <br>
+            <input type="text" name="password" placeholder="Enter your password">
+            <br>
+            <input type="submit" value="Log in">
+        </form>-->
+        
+        
+
+        <div name="pass_confirm"></div>
+        <h1>Here is your inventory: </h1>
+        <input type="text" name="item" id="item" placeholder="Enter your item">
+        <input type="text" name="quantity" id="quantity" placeholder="Enter Quantity">
+        <button type="Button"  id="add_button"  onclick="addItem()">Add</button> 
+        <div id="err1" style="color: red;"></div>
+        <br><br>
+        
+        <div id="storage"></div>
+    </body>
+    
+</html>

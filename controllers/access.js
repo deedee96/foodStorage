@@ -1,19 +1,57 @@
 var accessModel = require("../models/access.js");
 
 function handleUser(req, res) {
-	var email = req.query.email;
-    var password = req.query.password;
-	var result = accessModel.getUser(email, password, function(err,result) {
-        res.json(result);
-    });   
-
+    //console.log("Calling this function");
+    var result = {sucess: false};
+	var email = req.body.email;
+    var password = req.body.password;
+	var token = accessModel.getUser(email, function(err,token) {
+        if(!isEmptyObject(token)) {
+            if(token.Item.email === email && token.Item.password === password) {
+                req.session.email = email;
+                req.session.inventory = token.Item.inventory;
+                res.json({
+                    success: true,
+                    redirectTo: './inventory.html'
+                });
+            }
+        } else {
+            res.json(result);
+        }
+    }); 
     
-    console.log('Your email is ' + email);
-    console.log('Your password is '+ password);
+    
+    
+
+
+}
+
+
+function getInventory(req, res) {
+    //console.log("Calling this function");
+    var token = accessModel.getUser(req.session.email, function(err,token) {
+        if(!isEmptyObject(token)) {
+                res.json({
+                    inventory: token.Item.inventory
+                });
+            }
+        } 
+    ); 
+}
+
+
+function isEmptyObject(obj) {
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 
 module.exports = {
-	handleUser: handleUser
+	handleUser: handleUser,
+    getInventory: getInventory
 };
 

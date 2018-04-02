@@ -9,7 +9,8 @@ var docClient = new AWS.DynamoDB.DocumentClient()
 var table = "foodNode";
 
 
-function getUser(email, password, callback) {
+function getUser(email, callback) {
+    console.log("Calling getUser");
     var params = {
     TableName: table,
     Key:{
@@ -25,7 +26,7 @@ function getUser(email, password, callback) {
     }
     });
 
-
+    
 
 
 }
