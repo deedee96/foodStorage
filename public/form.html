@@ -3,6 +3,7 @@
     <head>
         <title>Food Storage</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css">
    	<script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -11,17 +12,22 @@
         <script src="ajax.js"></script>
         
     </head>
-    <body>
-        <input type="text" name="email" id="email" placeholder="Enter your email">
-        <br>
-        <input type="text" name="password" id="password" placeholder="Enter your password">
-         <br>
-        <button type="Button" onclick="login()">Log in</button>
-        <button type="Button" onclick="signUp()">Sign Up</button>
+    <body id="form-body">
+        <div id="child">
+            <div id="grand-child">
+                        <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email">
+                        <br>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
+                         <br>
+                        <button type="Button" class="btn btn-primary" onclick="login()">Log in</button>
+                        <button type="Button" class="btn btn-primary" onclick="signUp()">Sign Up</button>
+
+                        <div id="status"></div>
+            </div>
+
+        </div>
 
         
-        
-        <div id="status"></div>
 
     </body>
     

@@ -29,7 +29,11 @@ function getTable() {
       <th scope="col">#</th>
       <th scope="col">Items</th>
       <th scope="col">Quantity</th>
-      <th scope="col">Delete</th></tr>
+      <th scope="col">Increase</th>
+      <th scope="col">Decrease</th>
+      <th scope="col">Delete</th>
+      
+    </tr>
   </thead>
   <tbody>
  `
@@ -41,8 +45,11 @@ function getTable() {
     <tr>
       <th scope="row">${count}</th>
       <td>${k}</td>
-      <td>${v}</td> 
-      <td><button type="button" onclick="deleteItem(\'${k}\')">Drop</button></td> 
+      <td>${v}</td>
+      <td><button type="button" class="btn btn-primary" onclick="increaseItem(\'${k}\')">+1</button></td>
+      <td><button type="button" class="btn btn-primary" onclick="decreaseItem(\'${k}\')">-1</button></td>
+      <td><button type="button" class="btn btn-primary" onclick="deleteItem(\'${k}\')">Drop</button></td>
+
     </tr>     
 `
     count+=1;
@@ -78,6 +85,44 @@ function deleteItem(itemName) {
 }
 
 
+function increaseItem(itemName) {
+    var params = {
+        name: itemName
+    }
+    
+     $.post('/increaseItem', params, function(data) {
+        console.log(data);
+        if (!data.success) {
+            $("#err1").show();
+            $("#err1").text("Item already exist!");
+        } else {
+            $("#err1").hide();
+            getTable();
+        }
+    })   
+}
+
+
+
+
+function decreaseItem(itemName) {
+    var params = {
+        name: itemName
+    }
+    
+     $.post('/decreaseItem', params, function(data) {
+        console.log(data);
+        if (!data.success) {
+            $("#err1").show();
+            $("#err1").text("Item already exist!");
+        } else {
+            $("#err1").hide();
+            getTable();
+        }
+    })   
+}
+
+
 
 function addItem() {
     console.log("Calling add Item");
@@ -96,6 +141,36 @@ function addItem() {
             $("#err1").text("Item already exist!");
         } else {
             $("#err1").hide();
+            $("#err2").hide();
+            getTable();
+        }
+    })
+}
+
+
+
+
+
+function updateItem() {
+    console.log("Calling add Item");
+    var item = $("#item2").val();
+    var quantity = $("#quantity2").val();
+    
+    console.log(item);
+    console.log(quantity);
+    
+    var params = {
+        name: item,
+        quantity: quantity
+    };
+    
+    $.post('/updateItem', params, function(data) {
+        console.log(data);
+        if (!data.success) {
+            $("#err2").show();
+            $("#err2").text("This item isn't in your inventory.Please use add instead.");
+        } else {
+            $("#err2").hide();
             getTable();
         }
     })

@@ -8,7 +8,12 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var accessController = require('./controllers/access.js');
 var addController = require('./controllers/add.js');
+var updateController = require('./controllers/update.js');
 var deleteController = require('./controllers/delete.js');
+var increaseController = require('./controllers/increase.js');
+var decreaseController = require('./controllers/decrease.js');
+
+
 
 
 
@@ -29,7 +34,10 @@ app.set('port', process.env.PORT || 5000)
     .post('/login', accessController.handleUser)
     .get('/getInventory',accessController.getInventory)
     .post('/addItem', addController.addItem)
+    .post('/updateItem', updateController.updateItem)
     .post('/deleteItem', deleteController.deleteItem)
+    .post('/increaseItem', increaseController.increaseItem)
+    .post('/decreaseItem', decreaseController.decreaseItem)
     .listen(app.get('port'), function() {
      console.log("Listening on port: " + app.get('port'));
 });

@@ -8,24 +8,24 @@ var docClient = new AWS.DynamoDB.DocumentClient()
 var table = "foodNode";
 
 
-function updateInventory(itemName, quantity, email,res) {
+function updateInventory(itemName, email,res) {
     var params = {
         TableName: table,
         Key: { email: email },
-        UpdateExpression: "SET inventory.#itemName = :quan",
-        ConditionExpression: "attribute_not_exists(inventory.#itemName)", 
-        ExpressionAttributeValues: {
-            ":quan" : Number(quantity)
-        },
+        UpdateExpression: "set inventory.#itemName = inventory.#itemName + :i",
         ExpressionAttributeNames: {
             "#itemName": itemName
-        }
-    }
+        },
+        ExpressionAttributeValues: {
+            ":i": 1
+        },
+        ReturnValues: "UPDATED_NEW"
+    };
 
 
     docClient.update(params, function(err, data) {
         if (err) {
-            console.log("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
+            console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
             res.json({success: false});
         } else {
             res.json({success: true});

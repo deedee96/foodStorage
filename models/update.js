@@ -13,7 +13,7 @@ function updateInventory(itemName, quantity, email,res) {
         TableName: table,
         Key: { email: email },
         UpdateExpression: "SET inventory.#itemName = :quan",
-        ConditionExpression: "attribute_not_exists(inventory.#itemName)", 
+        ConditionExpression: "attribute_exists(inventory.#itemName)", 
         ExpressionAttributeValues: {
             ":quan" : Number(quantity)
         },
